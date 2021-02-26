@@ -54,22 +54,27 @@ extension SkeletonCollectionDataSource: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cellIdentifier = originalCollectionViewDataSource?.collectionSkeletonView(collectionView, cellIdentifierForItemAt: indexPath) ?? ""
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
-        skeletonViewIfContainerSkeletonIsActive(container: collectionView, view: cell)
+        let cell: UICollectionViewCell
+        if let cellIdentifier = originalCollectionViewDataSource!.collectionSkeletonView(collectionView, cellIdentifierForItemAt: indexPath) {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
+            skeletonViewIfContainerSkeletonIsActive(container: collectionView, view: cell)
+        } else {
+            cell = originalCollectionViewDataSource!.collectionView(collectionView, cellForItemAt: indexPath)
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
-        if let viewIdentifier = originalCollectionViewDataSource?.collectionSkeletonView(collectionView, supplementaryViewIdentifierOfKind: kind, at: indexPath) {
-            let view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: viewIdentifier, for: indexPath)
+        let view: UICollectionReusableView
+        if let viewIdentifier = originalCollectionViewDataSource!.collectionSkeletonView(collectionView, supplementaryViewIdentifierOfKind: kind, at: indexPath) {
+            view = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: viewIdentifier, for: indexPath)
             skeletonViewIfContainerSkeletonIsActive(container: collectionView, view: view)
-            return view
+        } else {
+            view = originalCollectionViewDataSource!.collectionView!(collectionView, viewForSupplementaryElementOfKind: kind, at: indexPath)
         }
-        
-        return UICollectionReusableView()
+        return view
     }
     
 }
