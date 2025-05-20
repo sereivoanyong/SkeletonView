@@ -16,21 +16,21 @@ import UIKit
 // codebeat:disable[TOO_MANY_IVARS]
 enum ViewAssociatedKeys {
     
-    static var skeletonable = "skeletonable"
-    static var hiddenWhenSkeletonIsActive = "hiddenWhenSkeletonIsActive"
-    static var status = "status"
-    static var skeletonLayer = "layer"
-    static var flowDelegate = "flowDelegate"
-    static var isSkeletonAnimated = "isSkeletonAnimated"
-    static var viewState = "viewState"
-    static var labelViewState = "labelViewState"
-    static var imageViewState = "imageViewState"
-    static var buttonViewState = "buttonViewState"
-    static var headerFooterViewState = "headerFooterViewState"
-    static var currentSkeletonConfig = "currentSkeletonConfig"
-    static var skeletonCornerRadius = "skeletonCornerRadius"
-    static var disabledWhenSkeletonIsActive = "disabledWhenSkeletonIsActive"
-    static var delayedShowSkeletonWorkItem = "delayedShowSkeletonWorkItem"
+    static var skeletonable: Void?
+    static var hiddenWhenSkeletonIsActive: Void?
+    static var status: Void?
+    static var skeletonLayer: Void?
+    static var flowDelegate: Void?
+    static var isSkeletonAnimated: Void?
+    static var viewState: Void?
+    static var labelViewState: Void?
+    static var imageViewState: Void?
+    static var buttonViewState: Void?
+    static var headerFooterViewState: Void?
+    static var currentSkeletonConfig: Void?
+    static var skeletonCornerRadius: Void?
+    static var disabledWhenSkeletonIsActive: Void?
+    static var delayedShowSkeletonWorkItem: Void?
     
 }
 // codebeat:enable[TOO_MANY_IVARS]
