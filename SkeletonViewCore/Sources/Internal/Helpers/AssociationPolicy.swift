@@ -1,38 +1,39 @@
 //  Copyright © 2017 SkeletonView. All rights reserved.
 
 import Foundation
+import ObjectiveC.runtime
 
-// Partially copy/pasted from https://github.com/jameslintaylor/AssociatedObjects/blob/master/AssociatedObjects/AssociatedObjects.swift
-enum AssociationPolicy: UInt {
-    // raw values map to objc_AssociationPolicy's raw values
-    case assign = 0
-    case copy = 771
-    case copyNonatomic = 3
-    case retain = 769
-    case retainNonatomic = 1
-    
-    var objc: objc_AssociationPolicy {
-        // swiftlint:disable:next force_unwrapping
-        return objc_AssociationPolicy(rawValue: rawValue)!
-    }
+@usableFromInline
+final class Reference {
+
+  @usableFromInline
+  let value: Any
+
+  init(_ value: Any) {
+    self.value = value
+  }
 }
 
-protocol AssociatedObjects: AnyObject { }
+extension NSObjectProtocol {
 
-extension AssociatedObjects {
     /// wrapper around `objc_getAssociatedObject`
-    func ao_get(pkey: UnsafeRawPointer) -> Any? {
-        return objc_getAssociatedObject(self, pkey)
+    func ao_object(forKey key: UnsafeRawPointer) -> AnyObject? {
+        return objc_getAssociatedObject(self, key) as? AnyObject
     }
 
     /// wrapper around `objc_setAssociatedObject`
-    func ao_setOptional(_ value: Any?, pkey: UnsafeRawPointer, policy: AssociationPolicy = .retainNonatomic) {
-        objc_setAssociatedObject(self, pkey, value, policy.objc)
+    func ao_setObject(_ object: AnyObject?, forKey key: UnsafeRawPointer, policy: objc_AssociationPolicy = .OBJC_ASSOCIATION_RETAIN_NONATOMIC) {
+        objc_setAssociatedObject(self, key, object, policy)
+    }
+
+    /// wrapper around `objc_getAssociatedObject`
+    func ao_value(forKey key: UnsafeRawPointer) -> Any? {
+        return (objc_getAssociatedObject(self, key) as? Reference)?.value
     }
 
     /// wrapper around `objc_setAssociatedObject`
-    func ao_set(_ value: Any, pkey: UnsafeRawPointer, policy: AssociationPolicy = .retainNonatomic) {
-        objc_setAssociatedObject(self, pkey, value, policy.objc)
+    func ao_setValue(_ value: Any?, forKey key: UnsafeRawPointer) {
+        objc_setAssociatedObject(self, key, value.map(Reference.init), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
 
     /// wrapper around 'objc_removeAssociatedObjects'
@@ -40,5 +41,3 @@ extension AssociatedObjects {
         objc_removeAssociatedObjects(self)
     }
 }
-
-extension NSObject: AssociatedObjects { }

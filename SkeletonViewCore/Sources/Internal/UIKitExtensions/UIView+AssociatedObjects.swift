@@ -43,52 +43,52 @@ extension UIView {
     }
 
     var _flowDelegate: SkeletonFlowDelegate? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.flowDelegate) as? SkeletonFlowDelegate }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.flowDelegate) }
+        get { return ao_object(forKey: &ViewAssociatedKeys.flowDelegate) as? SkeletonFlowDelegate }
+        set { ao_setObject(newValue, forKey: &ViewAssociatedKeys.flowDelegate) }
     }
 
     var _skeletonLayer: SkeletonLayer? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.skeletonLayer) as? SkeletonLayer }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.skeletonLayer) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.skeletonLayer) as? SkeletonLayer }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.skeletonLayer) }
     }
 
     var _currentSkeletonConfig: SkeletonConfig? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.currentSkeletonConfig) as? SkeletonConfig }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.currentSkeletonConfig) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.currentSkeletonConfig) as? SkeletonConfig }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.currentSkeletonConfig) }
     }
 
     var _status: SkeletonStatus {
-        get { return ao_get(pkey: &ViewAssociatedKeys.status) as? SkeletonStatus ?? .off }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.status) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.status) as? SkeletonStatus ?? .off }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.status) }
     }
 
     var _isSkeletonAnimated: Bool {
-        get { return ao_get(pkey: &ViewAssociatedKeys.isSkeletonAnimated) as? Bool ?? false }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.isSkeletonAnimated) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.isSkeletonAnimated) as? Bool ?? false }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.isSkeletonAnimated) }
     }
     
     var _delayedShowSkeletonWorkItem: DispatchWorkItem? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.delayedShowSkeletonWorkItem) as? DispatchWorkItem }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.delayedShowSkeletonWorkItem) }
+        get { return ao_object(forKey: &ViewAssociatedKeys.delayedShowSkeletonWorkItem) as? DispatchWorkItem }
+        set { ao_setObject(newValue, forKey: &ViewAssociatedKeys.delayedShowSkeletonWorkItem) }
     }
     
     var _skeletonable: Bool {
-        get { return ao_get(pkey: &ViewAssociatedKeys.skeletonable) as? Bool ?? false }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.skeletonable) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.skeletonable) as? Bool ?? false }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.skeletonable) }
     }
     
     var _hiddenWhenSkeletonIsActive: Bool {
-        get { return ao_get(pkey: &ViewAssociatedKeys.hiddenWhenSkeletonIsActive) as? Bool ?? false }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.hiddenWhenSkeletonIsActive) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.hiddenWhenSkeletonIsActive) as? Bool ?? false }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.hiddenWhenSkeletonIsActive) }
     }
     
     var _disabledWhenSkeletonIsActive: Bool {
-        get { return ao_get(pkey: &ViewAssociatedKeys.disabledWhenSkeletonIsActive) as? Bool ?? true }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.disabledWhenSkeletonIsActive) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.disabledWhenSkeletonIsActive) as? Bool ?? true }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.disabledWhenSkeletonIsActive) }
     }
 
     var _skeletonableCornerStyle: SkeletonCornerStyle {
-        get { return ao_get(pkey: &ViewAssociatedKeys.skeletonCornerStyle) as? SkeletonCornerStyle ?? SkeletonAppearance.default.cornerStyle }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.skeletonCornerStyle) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.skeletonCornerStyle) as? SkeletonCornerStyle ?? SkeletonAppearance.default.cornerStyle }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.skeletonCornerStyle) }
     }
 }

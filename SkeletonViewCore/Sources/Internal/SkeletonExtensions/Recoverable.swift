@@ -16,8 +16,8 @@ protocol Recoverable {
 extension UIView: Recoverable {
     
     var viewState: RecoverableViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.viewState) as? RecoverableViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.viewState) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.viewState) as? RecoverableViewState }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.viewState) }
     }
     
     @objc func saveViewState() {
@@ -48,8 +48,8 @@ extension UIView: Recoverable {
 extension UILabel {
     
     var labelState: RecoverableLabelState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.labelViewState) as? RecoverableLabelState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.labelViewState) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.labelViewState) as? RecoverableLabelState }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.labelViewState) }
     }
     
     override func saveViewState() {
@@ -84,8 +84,8 @@ extension UILabel {
 extension UITextView {
     
     var textState: RecoverableTextViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.labelViewState) as? RecoverableTextViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.labelViewState) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.labelViewState) as? RecoverableTextViewState }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.labelViewState) }
     }
     
     override func saveViewState() {
@@ -112,8 +112,8 @@ extension UITextView {
 extension UITextField {
     
     var textState: RecoverableTextFieldState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.labelViewState) as? RecoverableTextFieldState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.labelViewState) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.labelViewState) as? RecoverableTextFieldState }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.labelViewState) }
     }
 
     override func saveViewState() {
@@ -144,8 +144,8 @@ extension UITextField {
 extension UIImageView {
     
     var imageState: RecoverableImageViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.imageViewState) as? RecoverableImageViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.imageViewState) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.imageViewState) as? RecoverableImageViewState }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.imageViewState) }
     }
     
     override func saveViewState() {
@@ -165,8 +165,8 @@ extension UIImageView {
 extension UIButton {
     
     var buttonState: RecoverableButtonViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.buttonViewState) as? RecoverableButtonViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.buttonViewState) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.buttonViewState) as? RecoverableButtonViewState }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.buttonViewState) }
     }
     
     override func saveViewState() {
@@ -188,8 +188,8 @@ extension UIButton {
 extension UITableViewHeaderFooterView {
     
     var headerFooterState: RecoverableTableViewHeaderFooterViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.headerFooterViewState) as? RecoverableTableViewHeaderFooterViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.headerFooterViewState) }
+        get { return ao_value(forKey: &ViewAssociatedKeys.headerFooterViewState) as? RecoverableTableViewHeaderFooterViewState }
+        set { ao_setValue(newValue, forKey: &ViewAssociatedKeys.headerFooterViewState) }
     }
     
     override func saveViewState() {

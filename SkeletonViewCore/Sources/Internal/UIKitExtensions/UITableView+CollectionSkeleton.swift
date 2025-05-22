@@ -15,17 +15,17 @@ extension UITableView: CollectionSkeleton {
     }
     
     var skeletonDataSource: SkeletonCollectionDataSource? {
-        get { return ao_get(pkey: &CollectionAssociatedKeys.dummyDataSource) as? SkeletonCollectionDataSource }
+        get { return ao_object(forKey: &CollectionAssociatedKeys.dummyDataSource) as? SkeletonCollectionDataSource }
         set {
-            ao_setOptional(newValue, pkey: &CollectionAssociatedKeys.dummyDataSource)
+            ao_setObject(newValue, forKey: &CollectionAssociatedKeys.dummyDataSource)
             self.dataSource = newValue
         }
     }
     
     var skeletonDelegate: SkeletonCollectionDelegate? {
-        get { return ao_get(pkey: &CollectionAssociatedKeys.dummyDelegate) as? SkeletonCollectionDelegate }
+        get { return ao_object(forKey: &CollectionAssociatedKeys.dummyDelegate) as? SkeletonCollectionDelegate }
         set {
-            ao_setOptional(newValue, pkey: &CollectionAssociatedKeys.dummyDelegate)
+            ao_setObject(newValue, forKey: &CollectionAssociatedKeys.dummyDelegate)
             self.delegate = newValue
         }
     }

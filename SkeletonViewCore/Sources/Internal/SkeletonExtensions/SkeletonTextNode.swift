@@ -47,33 +47,33 @@ enum SkeletonTextNodeAssociatedKeys {
 extension SkeletonTextNode {
 
     var _sk_numberOfLines: SkeletonNumberOfLines {
-        get { return ao_get(pkey: &SkeletonTextNodeAssociatedKeys.skeletonNumberOfLines) as? SkeletonNumberOfLines ?? SkeletonNumberOfLines.inherited }
-        set { ao_set(newValue, pkey: &SkeletonTextNodeAssociatedKeys.skeletonNumberOfLines) }
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.skeletonNumberOfLines) as? SkeletonNumberOfLines ?? SkeletonNumberOfLines.inherited }
+        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.skeletonNumberOfLines) }
     }
 
     var lineCornerStyle: SkeletonCornerStyle {
-        get { return ao_get(pkey: &SkeletonTextNodeAssociatedKeys.lineCornerStyle) as? SkeletonCornerStyle ?? SkeletonAppearance.default.lineCornerStyle }
-        set { ao_set(newValue, pkey: &SkeletonTextNodeAssociatedKeys.lineCornerStyle) }
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.lineCornerStyle) as? SkeletonCornerStyle ?? SkeletonAppearance.default.lineCornerStyle }
+        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.lineCornerStyle) }
     }
 
     var lineHeight: SkeletonLineHeight {
-        get { return ao_get(pkey: &SkeletonTextNodeAssociatedKeys.lineHeight) as? SkeletonLineHeight ?? SkeletonAppearance.default.lineHeight }
-        set { ao_set(newValue, pkey: &SkeletonTextNodeAssociatedKeys.lineHeight) }
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.lineHeight) as? SkeletonLineHeight ?? SkeletonAppearance.default.lineHeight }
+        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.lineHeight) }
     }
 
     var lineSpacing: SkeletonLineSpacing {
-        get { return ao_get(pkey: &SkeletonTextNodeAssociatedKeys.lineSpacing) as? SkeletonLineSpacing ?? SkeletonAppearance.default.lineSpacing }
-        set { ao_set(newValue, pkey: &SkeletonTextNodeAssociatedKeys.lineSpacing) }
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.lineSpacing) as? SkeletonLineSpacing ?? SkeletonAppearance.default.lineSpacing }
+        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.lineSpacing) }
     }
 
     var lastLineFillPercent: Int {
-        get { return ao_get(pkey: &SkeletonTextNodeAssociatedKeys.lastLineFillPercent) as? Int ?? SkeletonAppearance.default.lastLineFillPercent }
-        set { ao_set(newValue, pkey: &SkeletonTextNodeAssociatedKeys.lastLineFillPercent) }
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.lastLineFillPercent) as? Int ?? SkeletonAppearance.default.lastLineFillPercent }
+        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.lastLineFillPercent) }
     }
 
     var insets: NSDirectionalEdgeInsets {
-        get { return ao_get(pkey: &SkeletonTextNodeAssociatedKeys.insets) as? NSDirectionalEdgeInsets ?? .zero }
-        set { ao_set(newValue, pkey: &SkeletonTextNodeAssociatedKeys.insets) }
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.insets) as? NSDirectionalEdgeInsets ?? .zero }
+        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.insets) }
     }
 
 }
@@ -117,8 +117,8 @@ extension UILabel: SkeletonTextNode {
     }
     
     var backupHeightConstraints: [NSLayoutConstraint] {
-        get { return ao_get(pkey: &SkeletonTextNodeAssociatedKeys.backupHeightConstraints) as? [NSLayoutConstraint] ?? [] }
-        set { ao_set(newValue, pkey: &SkeletonTextNodeAssociatedKeys.backupHeightConstraints) }
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.backupHeightConstraints) as? [NSLayoutConstraint] ?? [] }
+        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.backupHeightConstraints) }
     }
     
     var shouldCenterTextVertically: Bool {
