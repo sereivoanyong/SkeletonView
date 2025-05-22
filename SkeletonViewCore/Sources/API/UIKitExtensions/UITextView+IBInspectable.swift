@@ -15,16 +15,18 @@ import UIKit
 
 public extension UITextView {
     
+    /// Defines the logic for calculating the number of lines of the skeleton.
+    /// Default: -1 (inherited)
+    @IBInspectable
+    var skeletonNumberOfLines: Int {
+        get { return _sk_numberOfLines ?? -1 }
+        set { _sk_numberOfLines = newValue == -1 ? nil : newValue }
+    }
+    
     @IBInspectable
     var skeletonLineCornerRadius: CGFloat {
         get { return _sk_lineCornerStyle.resolved(for: nil) }
         set { _sk_lineCornerStyle = newValue < 0 ? .capsule : .fixed(newValue) }
-    }
-    
-    @IBInspectable
-    var skeletonLineSpacing: CGFloat {
-        get { return _sk_lineSpacing.resolved(for: _sk_font) }
-        set { _sk_lineSpacing = newValue < 0 ? .default : .fixed(newValue) }
     }
     
     @IBInspectable

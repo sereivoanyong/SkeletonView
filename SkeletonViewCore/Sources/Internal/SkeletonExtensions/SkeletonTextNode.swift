@@ -13,15 +13,12 @@
 
 import UIKit
 
-public protocol SkeletonTextView: UIView {
-
-  var textAlignment: NSTextAlignment { get }
-}
-
-protocol SkeletonTextNode: SkeletonTextView {
+protocol SkeletonTextNode: UIView {
+    
+    var textAlignment: NSTextAlignment { get }
 
     var _sk_font: UIFont { get }
-    var _sk_numberOfLines: SkeletonNumberOfLines { get }
+    var _sk_numberOfLines: Int? { get }
     var _sk_lineCornerStyle: SkeletonCornerStyle { get }
     var _sk_lineHeight: SkeletonLineHeight { get }
     var _sk_lineSpacing: SkeletonLineSpacing { get }
@@ -49,8 +46,8 @@ enum SkeletonTextNodeAssociatedKeys {
 
 extension SkeletonTextNode {
 
-    var _sk_numberOfLines: SkeletonNumberOfLines {
-        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.numberOfLines) as? SkeletonNumberOfLines ?? SkeletonNumberOfLines.inherited }
+    var _sk_numberOfLines: Int? {
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.numberOfLines) as? Int }
         set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.numberOfLines) }
     }
 
@@ -92,6 +89,23 @@ extension UILabel: SkeletonTextNode {
         }
     }
     
+    var backupHeightConstraints: [NSLayoutConstraint] {
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.backupHeightConstraints) as? [NSLayoutConstraint] ?? [] }
+        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.backupHeightConstraints) }
+    }
+    
+    var _sk_shouldCenterTextVertically: Bool {
+        true
+    }
+    
+    var _sk_estimatedNumberOfLines: Int {
+        if let _sk_numberOfLines {
+            return _sk_numberOfLines >= 0 ? _sk_numberOfLines : 1
+        } else {
+            return numberOfLines
+        }
+    }
+    
     var _sk_estimatedLineHeight: CGFloat {
         switch _sk_lineHeight {
         case .default:
@@ -110,24 +124,6 @@ extension UILabel: SkeletonTextNode {
             return constraintsLineHeight / CGFloat(estimatedNumberOfLines)
         }
     }
-    
-    var _sk_estimatedNumberOfLines: Int {
-        switch _sk_numberOfLines {
-        case .inherited:
-            return numberOfLines
-        case .custom(let lines):
-            return lines >= 0 ? lines : 1
-        }
-    }
-    
-    var backupHeightConstraints: [NSLayoutConstraint] {
-        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.backupHeightConstraints) as? [NSLayoutConstraint] ?? [] }
-        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.backupHeightConstraints) }
-    }
-    
-    var _sk_shouldCenterTextVertically: Bool {
-        true
-    }
 
 }
 
@@ -142,6 +138,18 @@ extension UITextView: SkeletonTextNode {
         }
     }
     
+    var _sk_shouldCenterTextVertically: Bool {
+        false
+    }
+    
+    var _sk_estimatedNumberOfLines: Int {
+        if let _sk_numberOfLines {
+            return _sk_numberOfLines >= -1 ? _sk_numberOfLines : 1
+        } else {
+            return -1
+        }
+    }
+    
     var _sk_estimatedLineHeight: CGFloat {
         switch _sk_lineHeight {
         case .default:
@@ -153,19 +161,6 @@ extension UITextView: SkeletonTextNode {
         case .relativeToConstraints:
             return _sk_font.lineHeight
         }
-    }
-    
-    var _sk_estimatedNumberOfLines: Int {
-        switch _sk_numberOfLines {
-        case .inherited:
-            return -1
-        case .custom(let lines):
-            return lines >= -1 ? lines : 1
-        }
-    }
-    
-    var _sk_shouldCenterTextVertically: Bool {
-        false
     }
     
 }

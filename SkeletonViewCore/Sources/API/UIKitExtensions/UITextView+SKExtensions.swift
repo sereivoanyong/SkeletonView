@@ -15,13 +15,6 @@ import UIKit
 
 public extension UITextView {
     
-    /// Defines the logic for calculating the number of lines of the skeleton.
-    /// Default: `inherited`
-    var skeletonNumberOfLines: SkeletonNumberOfLines {
-        get { return _sk_numberOfLines }
-        set { _sk_numberOfLines = newValue }
-    }
-    
     var skeletonLineCornerStyle: SkeletonCornerStyle {
         get { return _sk_lineCornerStyle }
         set { _sk_lineCornerStyle = newValue }
@@ -32,6 +25,11 @@ public extension UITextView {
     var skeletonLineHeight: SkeletonLineHeight {
         get { return _sk_lineHeight }
         set { _sk_lineHeight = newValue }
+    }
+    
+    var skeletonLineSpacing: SkeletonLineSpacing {
+        get { return _sk_lineSpacing }
+        set { _sk_lineSpacing = newValue }
     }
     
     /// Defines the skeleton insets.
