@@ -17,20 +17,20 @@ public extension UITextView {
     
     @IBInspectable
     var skeletonLineCornerRadius: CGFloat {
-        get { return lineCornerStyle.resolved(for: nil) }
-        set { lineCornerStyle = newValue < 0 ? .capsule : .fixed(newValue) }
+        get { return _sk_lineCornerStyle.resolved(for: nil) }
+        set { _sk_lineCornerStyle = newValue < 0 ? .capsule : .fixed(newValue) }
     }
     
     @IBInspectable
     var skeletonLineSpacing: CGFloat {
-        get { return lineSpacing.resolved(for: _sk_font) }
-        set { lineSpacing = newValue < 0 ? .default : .fixed(newValue) }
+        get { return _sk_lineSpacing.resolved(for: _sk_font) }
+        set { _sk_lineSpacing = newValue < 0 ? .default : .fixed(newValue) }
     }
     
     @IBInspectable
     var skeletonLastLineFillPercent: Int {
-        get { return lastLineFillPercent }
-        set { lastLineFillPercent = min(newValue, 100) }
+        get { return _sk_lastLineFillPercent }
+        set { _sk_lastLineFillPercent = min(newValue, 100) }
     }
     
 }

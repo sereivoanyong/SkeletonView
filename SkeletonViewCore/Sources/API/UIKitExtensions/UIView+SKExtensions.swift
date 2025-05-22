@@ -16,8 +16,8 @@ import UIKit
 public extension UIView {
     
     var skeletonCornerStyle: SkeletonCornerStyle {
-        get { return _skeletonableCornerStyle }
-        set { _skeletonableCornerStyle = newValue }
+        get { return _sk_cornerStyle }
+        set { _sk_cornerStyle = newValue }
     }
     
 }

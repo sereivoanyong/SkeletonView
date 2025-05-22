@@ -63,15 +63,15 @@ struct SkeletonLayer {
         let isRTL = textView.isRTL
         let config = SkeletonLineLayerConfiguration(type: type,
                                                     font: textView._sk_font,
-                                                    numberOfLines: textView.estimatedNumberOfLines,
-                                                    lineCornerStyle: textView.lineCornerStyle,
-                                                    lineHeight: textView.estimatedLineHeight,
-                                                    lineSpacing: textView.lineSpacing,
-                                                    lastLineFillPercent: textView.lastLineFillPercent,
-                                                    insets: textView.insets.resolved(isRTL: isRTL),
+                                                    numberOfLines: textView._sk_estimatedNumberOfLines,
+                                                    lineCornerStyle: textView._sk_lineCornerStyle,
+                                                    lineHeight: textView._sk_estimatedLineHeight,
+                                                    lineSpacing: textView._sk_lineSpacing,
+                                                    lastLineFillPercent: textView._sk_lastLineFillPercent,
+                                                    insets: textView._sk_insets.resolved(isRTL: isRTL),
                                                     alignment: textView.textAlignment,
                                                     isRTL: isRTL,
-                                                    shouldCenterVertically: textView.shouldCenterTextVertically)
+                                                    shouldCenterVertically: textView._sk_shouldCenterTextVertically)
 
         maskLayer.addLineLayers(for: config)
     }
@@ -81,22 +81,23 @@ struct SkeletonLayer {
         let isRTL = textView.isRTL
         let config = SkeletonLineLayerConfiguration(type: type,
                                                     font: textView._sk_font,
-                                                    numberOfLines: textView.estimatedNumberOfLines,
-                                                    lineCornerStyle: textView.lineCornerStyle,
-                                                    lineHeight: textView.estimatedLineHeight,
-                                                    lineSpacing: textView.lineSpacing,
-                                                    lastLineFillPercent: textView.lastLineFillPercent,
-                                                    insets: textView.insets.resolved(isRTL: isRTL),
+                                                    numberOfLines: textView._sk_estimatedNumberOfLines,
+                                                    lineCornerStyle: textView._sk_lineCornerStyle,
+                                                    lineHeight: textView._sk_estimatedLineHeight,
+                                                    lineSpacing: textView._sk_lineSpacing,
+                                                    lastLineFillPercent: textView._sk_lastLineFillPercent,
+                                                    insets: textView._sk_insets.resolved(isRTL: isRTL),
                                                     alignment: textView.textAlignment,
                                                     isRTL: isRTL,
-                                                    shouldCenterVertically: textView.shouldCenterTextVertically)
+                                                    shouldCenterVertically: textView._sk_shouldCenterTextVertically)
 
         maskLayer.updateLineLayers(for: config)
     }
     
     var holderAsTextView: SkeletonTextNode? {
-        guard let textView = holder as? SkeletonTextNode,
-            (textView.estimatedNumberOfLines == -1 || textView.estimatedNumberOfLines == 0 || textView.estimatedNumberOfLines > 1 || textView.estimatedNumberOfLines == 1 && !SkeletonAppearance.default.renderSingleLineAsView) else {
+        guard let textView = holder as? SkeletonTextNode else { return nil }
+        let estimatedNumberOfLines = textView._sk_estimatedNumberOfLines
+        guard (estimatedNumberOfLines == -1 || estimatedNumberOfLines == 0 || estimatedNumberOfLines > 1 || estimatedNumberOfLines == 1 && !SkeletonAppearance.default.renderSingleLineAsView) else {
                 return nil
         }
         return textView

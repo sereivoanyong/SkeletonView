@@ -18,26 +18,26 @@ public extension UILabel {
     /// Defines the logic for calculating the number of lines of the skeleton.
     /// Default: `inherited`
     var skeletonNumberOfLines: SkeletonNumberOfLines {
-        get { _sk_numberOfLines }
+        get { return _sk_numberOfLines }
         set { _sk_numberOfLines = newValue }
     }
     
     var skeletonLineCornerStyle: SkeletonCornerStyle {
-        get { return lineCornerStyle }
-        set { lineCornerStyle = newValue }
+        get { return _sk_lineCornerStyle }
+        set { _sk_lineCornerStyle = newValue }
     }
     
     /// Defines the logic for calculating the height of the skeleton lines.
     /// Default: `SkeletonAppearance.default.textLineHeight`
     var skeletonLineHeight: SkeletonLineHeight {
-        get { return lineHeight }
-        set { lineHeight = newValue }
+        get { return _sk_lineHeight }
+        set { _sk_lineHeight = newValue }
     }
     
     /// Defines the skeleton insets.
     var skeletonInsets: NSDirectionalEdgeInsets {
-        get { return insets }
-        set { insets = newValue }
+        get { return _sk_insets }
+        set { _sk_insets = newValue }
     }
     
 }

@@ -13,28 +13,31 @@
 
 import UIKit
 
-protocol SkeletonTextNode: UIView {
-    
+public protocol SkeletonTextView: UIView {
+
+  var textAlignment: NSTextAlignment { get }
+}
+
+protocol SkeletonTextNode: SkeletonTextView {
+
     var _sk_font: UIFont { get }
     var _sk_numberOfLines: SkeletonNumberOfLines { get }
-    var lineCornerStyle: SkeletonCornerStyle { get }
-    var lineHeight: SkeletonLineHeight { get }
-    var lineSpacing: SkeletonLineSpacing { get }
-    var lastLineFillPercent: Int { get }
-    var insets: NSDirectionalEdgeInsets { get }
-    
-    var estimatedNumberOfLines: Int { get }
-    var estimatedLineHeight: CGFloat { get }
-    
-    var textAlignment: NSTextAlignment { get }
-    
-    var shouldCenterTextVertically: Bool { get }
-    
+    var _sk_lineCornerStyle: SkeletonCornerStyle { get }
+    var _sk_lineHeight: SkeletonLineHeight { get }
+    var _sk_lineSpacing: SkeletonLineSpacing { get }
+    var _sk_lastLineFillPercent: Int { get }
+    var _sk_insets: NSDirectionalEdgeInsets { get }
+
+    var _sk_estimatedNumberOfLines: Int { get }
+    var _sk_estimatedLineHeight: CGFloat { get }
+
+    var _sk_shouldCenterTextVertically: Bool { get }
+
 }
 
 enum SkeletonTextNodeAssociatedKeys {
     
-    static var skeletonNumberOfLines: Void?
+    static var numberOfLines: Void?
     static var lineCornerStyle: Void?
     static var lineHeight: Void?
     static var lineSpacing: Void?
@@ -47,31 +50,31 @@ enum SkeletonTextNodeAssociatedKeys {
 extension SkeletonTextNode {
 
     var _sk_numberOfLines: SkeletonNumberOfLines {
-        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.skeletonNumberOfLines) as? SkeletonNumberOfLines ?? SkeletonNumberOfLines.inherited }
-        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.skeletonNumberOfLines) }
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.numberOfLines) as? SkeletonNumberOfLines ?? SkeletonNumberOfLines.inherited }
+        set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.numberOfLines) }
     }
 
-    var lineCornerStyle: SkeletonCornerStyle {
+    var _sk_lineCornerStyle: SkeletonCornerStyle {
         get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.lineCornerStyle) as? SkeletonCornerStyle ?? SkeletonAppearance.default.lineCornerStyle }
         set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.lineCornerStyle) }
     }
 
-    var lineHeight: SkeletonLineHeight {
+    var _sk_lineHeight: SkeletonLineHeight {
         get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.lineHeight) as? SkeletonLineHeight ?? SkeletonAppearance.default.lineHeight }
         set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.lineHeight) }
     }
 
-    var lineSpacing: SkeletonLineSpacing {
+    var _sk_lineSpacing: SkeletonLineSpacing {
         get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.lineSpacing) as? SkeletonLineSpacing ?? SkeletonAppearance.default.lineSpacing }
         set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.lineSpacing) }
     }
 
-    var lastLineFillPercent: Int {
+    var _sk_lastLineFillPercent: Int {
         get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.lastLineFillPercent) as? Int ?? SkeletonAppearance.default.lastLineFillPercent }
         set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.lastLineFillPercent) }
     }
 
-    var insets: NSDirectionalEdgeInsets {
+    var _sk_insets: NSDirectionalEdgeInsets {
         get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.insets) as? NSDirectionalEdgeInsets ?? .zero }
         set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.insets) }
     }
@@ -89,8 +92,8 @@ extension UILabel: SkeletonTextNode {
         }
     }
     
-    var estimatedLineHeight: CGFloat {
-        switch lineHeight {
+    var _sk_estimatedLineHeight: CGFloat {
+        switch _sk_lineHeight {
         case .default:
             return _sk_font.capHeight
         case .fixed(let height):
@@ -98,6 +101,7 @@ extension UILabel: SkeletonTextNode {
         case .relativeToFont(let keyPath):
             return _sk_font[keyPath: keyPath]
         case .relativeToConstraints:
+            let estimatedNumberOfLines = _sk_estimatedNumberOfLines
             guard let constraintsLineHeight = heightConstraints.first?.constant,
                   estimatedNumberOfLines != 0 else {
                 return _sk_font.lineHeight
@@ -107,7 +111,7 @@ extension UILabel: SkeletonTextNode {
         }
     }
     
-    var estimatedNumberOfLines: Int {
+    var _sk_estimatedNumberOfLines: Int {
         switch _sk_numberOfLines {
         case .inherited:
             return numberOfLines
@@ -121,7 +125,7 @@ extension UILabel: SkeletonTextNode {
         set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.backupHeightConstraints) }
     }
     
-    var shouldCenterTextVertically: Bool {
+    var _sk_shouldCenterTextVertically: Bool {
         true
     }
 
@@ -138,8 +142,8 @@ extension UITextView: SkeletonTextNode {
         }
     }
     
-    var estimatedLineHeight: CGFloat {
-        switch lineHeight {
+    var _sk_estimatedLineHeight: CGFloat {
+        switch _sk_lineHeight {
         case .default:
             return _sk_font.capHeight
         case .fixed(let height):
@@ -151,7 +155,7 @@ extension UITextView: SkeletonTextNode {
         }
     }
     
-    var estimatedNumberOfLines: Int {
+    var _sk_estimatedNumberOfLines: Int {
         switch _sk_numberOfLines {
         case .inherited:
             return -1
@@ -160,7 +164,7 @@ extension UITextView: SkeletonTextNode {
         }
     }
     
-    var shouldCenterTextVertically: Bool {
+    var _sk_shouldCenterTextVertically: Bool {
         false
     }
     

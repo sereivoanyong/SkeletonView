@@ -17,26 +17,26 @@ public extension UIView {
     
     @IBInspectable
     var isSkeletonable: Bool {
-        get { _skeletonable }
+        get { return _skeletonable }
         set { _skeletonable = newValue }
     }
     
     @IBInspectable
     var isHiddenWhenSkeletonIsActive: Bool {
-        get { _hiddenWhenSkeletonIsActive }
+        get { return _hiddenWhenSkeletonIsActive }
         set { _hiddenWhenSkeletonIsActive = newValue }
     }
     
     @IBInspectable
     var isUserInteractionDisabledWhenSkeletonIsActive: Bool {
-        get { _disabledWhenSkeletonIsActive }
+        get { return _disabledWhenSkeletonIsActive }
         set { _disabledWhenSkeletonIsActive = newValue }
     }
 
     @IBInspectable
     var skeletonCornerRadius: CGFloat {
-        get { return _skeletonableCornerStyle.resolved(for: nil) }
-        set { _skeletonableCornerStyle = newValue < 0 ? .capsule : .fixed(newValue) }
+        get { return _sk_cornerStyle.resolved(for: nil) }
+        set { _sk_cornerStyle = newValue < 0 ? .capsule : .fixed(newValue) }
     }
     
 }
