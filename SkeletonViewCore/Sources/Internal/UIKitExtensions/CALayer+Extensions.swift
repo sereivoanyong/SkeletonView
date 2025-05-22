@@ -115,10 +115,10 @@ private extension CALayer {
         return newRect
     }
     
-    func calculatedWidthForLine(at index: Int, totalLines: Int, lastLineFillPercent: Int, insets: UIEdgeInsets) -> CGFloat {
+    func calculatedWidthForLine(at index: Int, totalLines: Int, lastLineFillPercent: CGFloat, insets: UIEdgeInsets) -> CGFloat {
         var width = bounds.width - insets.left - insets.right
         if index == totalLines - 1 {
-            width = width * CGFloat(lastLineFillPercent) / 100
+            width = width * lastLineFillPercent
         }
         return width
     }

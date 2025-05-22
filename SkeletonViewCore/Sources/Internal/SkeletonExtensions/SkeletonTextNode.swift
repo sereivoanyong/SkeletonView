@@ -25,7 +25,7 @@ protocol SkeletonTextNode: SkeletonTextView {
     var _sk_lineCornerStyle: SkeletonCornerStyle { get }
     var _sk_lineHeight: SkeletonLineHeight { get }
     var _sk_lineSpacing: SkeletonLineSpacing { get }
-    var _sk_lastLineFillPercent: Int { get }
+    var _sk_lastLineFillPercent: CGFloat { get }
     var _sk_insets: NSDirectionalEdgeInsets { get }
 
     var _sk_estimatedNumberOfLines: Int { get }
@@ -69,8 +69,8 @@ extension SkeletonTextNode {
         set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.lineSpacing) }
     }
 
-    var _sk_lastLineFillPercent: Int {
-        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.lastLineFillPercent) as? Int ?? SkeletonAppearance.default.lastLineFillPercent }
+    var _sk_lastLineFillPercent: CGFloat {
+        get { return ao_value(forKey: &SkeletonTextNodeAssociatedKeys.lastLineFillPercent) as? CGFloat ?? SkeletonAppearance.default.lastLineFillPercent }
         set { ao_setValue(newValue, forKey: &SkeletonTextNodeAssociatedKeys.lastLineFillPercent) }
     }
 

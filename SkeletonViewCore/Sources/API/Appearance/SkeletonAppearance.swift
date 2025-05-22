@@ -29,7 +29,7 @@ final public class SkeletonAppearance {
 
     public var lineSpacing: SkeletonLineSpacing = .default
 
-    public var lastLineFillPercent: Int = 70
+    public var lastLineFillPercent: CGFloat = 0.7
 
     public var renderSingleLineAsView: Bool = false
 

@@ -28,9 +28,9 @@ public extension UILabel {
     }
     
     @IBInspectable
-    var skeletonLastLineFillPercent: Int {
+    var skeletonLastLineFillPercent: CGFloat {
         get { return _sk_lastLineFillPercent }
-        set { _sk_lastLineFillPercent = min(newValue, 100) }
+        set { _sk_lastLineFillPercent = min(max(newValue, 0), 1) }
     }
     
 }

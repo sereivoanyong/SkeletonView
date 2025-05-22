@@ -21,7 +21,7 @@ struct SkeletonLineLayerConfiguration {
     let lineCornerStyle: SkeletonCornerStyle
     let lineHeight: CGFloat
     let lineSpacing: SkeletonLineSpacing
-    let lastLineFillPercent: Int
+    let lastLineFillPercent: CGFloat
     let insets: UIEdgeInsets
     let alignment: NSTextAlignment
     let isRTL: Bool
