@@ -16,21 +16,21 @@ import UIKit
 public extension UILabel {
     
     @IBInspectable
-    var lastLineFillPercent: Int {
-        get { return lastLineFillingPercent }
-        set { lastLineFillingPercent = min(newValue, 100) }
-    }
-    
-    @IBInspectable
-    var linesCornerRadius: Int {
-        get { return multilineCornerRadius }
-        set { multilineCornerRadius = newValue }
+    var skeletonLineCornerRadius: CGFloat {
+        get { return lineCornerStyle.resolved(for: nil) }
+        set { lineCornerStyle = newValue < 0 ? .capsule : .fixed(newValue) }
     }
     
     @IBInspectable
     var skeletonLineSpacing: CGFloat {
-        get { return multilineSpacing }
-        set { multilineSpacing = newValue }
+        get { return lineSpacing.resolved(for: _sk_font) }
+        set { lineSpacing = newValue < 0 ? .default : .fixed(newValue) }
+    }
+    
+    @IBInspectable
+    var skeletonLastLineFillPercent: Int {
+        get { return lastLineFillPercent }
+        set { lastLineFillPercent = min(newValue, 100) }
     }
     
 }

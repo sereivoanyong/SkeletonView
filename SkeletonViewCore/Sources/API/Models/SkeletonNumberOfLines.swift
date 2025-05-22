@@ -7,13 +7,13 @@
 //
 //      https://opensource.org/licenses/MIT
 //
-//  SkeletonTextNumberOfLines.swift
+//  SkeletonNumberOfLines.swift
 //
 //  Created by Juanpe Catalán on 10/1/22.
 
 import UIKit
 
-public enum SkeletonTextNumberOfLines: Equatable, ExpressibleByIntegerLiteral {
+public enum SkeletonNumberOfLines: Equatable, ExpressibleByIntegerLiteral {
     
     /// Returns `numberOfLines` value.
     case inherited
@@ -23,7 +23,7 @@ public enum SkeletonTextNumberOfLines: Equatable, ExpressibleByIntegerLiteral {
     
 }
 
-public extension SkeletonTextNumberOfLines {
+public extension SkeletonNumberOfLines {
     
     init(integerLiteral value: Int) {
         self = .custom(value)

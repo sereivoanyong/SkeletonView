@@ -30,11 +30,7 @@ extension UIView {
     }
     
     var isRTL: Bool {
-        if #available(iOS 10.0, *), #available(tvOS 10.0, *) {
-            return effectiveUserInterfaceLayoutDirection == .rightToLeft
-        } else {
-            return false
-        }
+        return effectiveUserInterfaceLayoutDirection == .rightToLeft
     }
     
     /// Math
@@ -178,4 +174,17 @@ extension UIView {
         }
     }
     
+}
+
+extension NSDirectionalEdgeInsets {
+
+    func resolved(isRTL: Bool) -> UIEdgeInsets {
+        return UIEdgeInsets(
+            top: top,
+            left: isRTL ? trailing : leading,
+            bottom: bottom,
+            right: isRTL ? leading : trailing
+        )
+    }
+
 }

@@ -28,7 +28,7 @@ enum ViewAssociatedKeys {
     static var buttonViewState: Void?
     static var headerFooterViewState: Void?
     static var currentSkeletonConfig: Void?
-    static var skeletonCornerRadius: Void?
+    static var skeletonCornerStyle: Void?
     static var disabledWhenSkeletonIsActive: Void?
     static var delayedShowSkeletonWorkItem: Void?
     
@@ -87,8 +87,8 @@ extension UIView {
         set { ao_set(newValue, pkey: &ViewAssociatedKeys.disabledWhenSkeletonIsActive) }
     }
 
-    var _skeletonableCornerRadius: Float {
-        get { return ao_get(pkey: &ViewAssociatedKeys.skeletonCornerRadius) as? Float ?? SkeletonViewAppearance.shared.skeletonCornerRadius }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.skeletonCornerRadius) }
+    var _skeletonableCornerStyle: SkeletonCornerStyle {
+        get { return ao_get(pkey: &ViewAssociatedKeys.skeletonCornerStyle) as? SkeletonCornerStyle ?? SkeletonAppearance.default.cornerStyle }
+        set { ao_set(newValue, pkey: &ViewAssociatedKeys.skeletonCornerStyle) }
     }
 }

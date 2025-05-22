@@ -13,6 +13,15 @@
 
 import UIKit
 
+public extension UIView {
+    
+    var skeletonCornerStyle: SkeletonCornerStyle {
+        get { return _skeletonableCornerStyle }
+        set { _skeletonableCornerStyle = newValue }
+    }
+    
+}
+
 public extension SkeletonViewExtension where ExtendedType: UIView {
     
     /// Returns a string that describes the hierarchy of the skeleton, indicating

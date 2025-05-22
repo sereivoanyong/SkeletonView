@@ -96,16 +96,16 @@ extension CALayer {
 
 private extension CALayer {
     
-    func alignLayerFrame(_ rect: CGRect, paddingInsets: UIEdgeInsets, alignment: NSTextAlignment, isRTL: Bool) -> CGRect {
+    func alignLayerFrame(_ rect: CGRect, insets: UIEdgeInsets, alignment: NSTextAlignment, isRTL: Bool) -> CGRect {
         var newRect = rect
         let superlayerWidth = (superlayer?.bounds.width ?? 0)
 
         switch alignment {
         case .natural where isRTL,
              .right:
-            newRect.origin.x = superlayerWidth - rect.width - paddingInsets.right
+            newRect.origin.x = superlayerWidth - rect.width - insets.right
         case .center:
-            newRect.origin.x = (superlayerWidth + paddingInsets.left - paddingInsets.right - rect.width) / 2
+            newRect.origin.x = (superlayerWidth + insets.left - insets.right - rect.width) / 2
         case .natural, .left, .justified:
             break
         @unknown default:
@@ -115,18 +115,18 @@ private extension CALayer {
         return newRect
     }
     
-    func calculatedWidthForLine(at index: Int, totalLines: Int, lastLineFillPercent: Int, paddingInsets: UIEdgeInsets) -> CGFloat {
-        var width = bounds.width - paddingInsets.left - paddingInsets.right
+    func calculatedWidthForLine(at index: Int, totalLines: Int, lastLineFillPercent: Int, insets: UIEdgeInsets) -> CGFloat {
+        var width = bounds.width - insets.left - insets.right
         if index == totalLines - 1 {
             width = width * CGFloat(lastLineFillPercent) / 100
         }
         return width
     }
  
-    func calculateNumLines(for config: SkeletonMultilinesLayerConfig) -> Int {
-        let definedNumberOfLines = config.lines
-        let requiredSpaceForEachLine = config.lineHeight + config.multilineSpacing
-        let neededLines = round(CGFloat(bounds.height - config.paddingInsets.top - config.paddingInsets.bottom) / CGFloat(requiredSpaceForEachLine))
+    func calculateNumberOfLines(for config: SkeletonLineLayerConfiguration) -> Int {
+        let definedNumberOfLines = config.numberOfLines
+        let requiredSpaceForEachLine = config.lineHeight + config.lineSpacing.resolved(for: config.font)
+        let neededLines = round((bounds.height - config.insets.top - config.insets.bottom) / CGFloat(requiredSpaceForEachLine))
         guard neededLines.isNormal else {
             return 0
         }
@@ -146,25 +146,26 @@ private extension CALayer {
 
 extension CALayer {
     
-    func addMultilinesLayers(for config: SkeletonMultilinesLayerConfig) {
-        let numberOfSublayers = config.lines > 0 ? config.lines : calculateNumLines(for: config)
+    func addLineLayers(for config: SkeletonLineLayerConfiguration) {
+        let numberOfSublayers = config.numberOfLines > 0 ? config.numberOfLines : calculateNumberOfLines(for: config)
+        let insets = config.insets
         var height = config.lineHeight
         
         if numberOfSublayers == 1 && SkeletonAppearance.default.renderSingleLineAsView {
             height = bounds.height
         }
 
-        let layerBuilder = SkeletonMultilineLayerBuilder()
+        let layerBuilder = SkeletonLineLayerBuilder()
             .setSkeletonType(config.type)
-            .setCornerRadius(config.multilineCornerRadius)
-            .setMultilineSpacing(config.multilineSpacing)
-            .setPadding(config.paddingInsets)
+            .setFont(config.font)
             .setHeight(height)
+            .setSpacing(config.lineSpacing)
+            .setInsets(insets)
             .setAlignment(config.alignment)
             .setIsRTL(config.isRTL)
     
         (0..<numberOfSublayers).forEach { index in
-            let width = calculatedWidthForLine(at: index, totalLines: numberOfSublayers, lastLineFillPercent: config.lastLineFillPercent, paddingInsets: config.paddingInsets)
+            let width = calculatedWidthForLine(at: index, totalLines: numberOfSublayers, lastLineFillPercent: config.lastLineFillPercent, insets: insets)
             if let layer = layerBuilder
                 .setIndex(index)
                 .setWidth(width)
@@ -174,12 +175,10 @@ extension CALayer {
         }
     }
 
-    func updateMultilinesLayers(for config: SkeletonMultilinesLayerConfig) {
+    func updateLineLayers(for config: SkeletonLineLayerConfiguration) {
         let currentSkeletonSublayers = skeletonSublayers
         let numberOfSublayers = currentSkeletonSublayers.count
-        let lastLineFillPercent = config.lastLineFillPercent
-        let paddingInsets = config.calculatedPaddingInsets
-        let multilineSpacing = config.multilineSpacing
+        let insets = config.insets
         var height = config.lineHeight
         
         if numberOfSublayers == 1 && SkeletonAppearance.default.renderSingleLineAsView {
@@ -187,15 +186,16 @@ extension CALayer {
         }
         
         for (index, layer) in currentSkeletonSublayers.enumerated() {
-            let width = calculatedWidthForLine(at: index, totalLines: numberOfSublayers, lastLineFillPercent: lastLineFillPercent, paddingInsets: paddingInsets)
+            let width = calculatedWidthForLine(at: index, totalLines: numberOfSublayers, lastLineFillPercent: config.lastLineFillPercent, insets: insets)
             layer.updateLayerFrame(for: index,
-                                   totalLines: numberOfSublayers,
+                                   font: config.font,
+                                   numberOfLines: numberOfSublayers,
                                    size: CGSize(width: width, height: height),
-                                   multilineSpacing: multilineSpacing,
-                                   paddingInsets: paddingInsets,
+                                   lineSpacing: config.lineSpacing,
+                                   insets: insets,
                                    alignment: config.alignment,
-                                   isRTL: config.isRTL
-            )
+                                   isRTL: config.isRTL)
+            layer.cornerRadius = config.lineCornerStyle.resolved(for: layer.bounds)
         }
         
         guard config.shouldCenterVertically,
@@ -203,7 +203,7 @@ extension CALayer {
             return
         }
         let verticallyCenterAlignedFrames = currentSkeletonSublayers.map { layer -> CGRect in
-            let moveDownBy = (bounds.height - (maxY + paddingInsets.top + paddingInsets.bottom)) / 2
+            let moveDownBy = (bounds.height - (maxY + insets.top + insets.bottom)) / 2
             return layer.frame.offsetBy(dx: 0, dy: moveDownBy)
         }
         
@@ -212,15 +212,15 @@ extension CALayer {
         }
     }
 
-    func updateLayerFrame(for index: Int, totalLines: Int, size: CGSize, multilineSpacing: CGFloat, paddingInsets: UIEdgeInsets, alignment: NSTextAlignment, isRTL: Bool) {
-        let spaceRequiredForEachLine = size.height + multilineSpacing
-        let newFrame = CGRect(x: paddingInsets.left,
-                              y: CGFloat(index) * spaceRequiredForEachLine + paddingInsets.top,
+    func updateLayerFrame(for index: Int, font: UIFont, numberOfLines: Int, size: CGSize, lineSpacing: SkeletonLineSpacing, insets: UIEdgeInsets, alignment: NSTextAlignment, isRTL: Bool) {
+        let spaceRequiredForEachLine = size.height + lineSpacing.resolved(for: font)
+        let newFrame = CGRect(x: insets.left,
+                              y: CGFloat(index) * spaceRequiredForEachLine + insets.top,
                               width: size.width,
                               height: size.height)
 
-        if index == totalLines - 1 {
-            frame = alignLayerFrame(newFrame, paddingInsets: paddingInsets, alignment: alignment, isRTL: isRTL)
+        if index == numberOfLines - 1 {
+            frame = alignLayerFrame(newFrame, insets: insets, alignment: alignment, isRTL: isRTL)
         } else {
             frame = newFrame
         }

@@ -27,7 +27,6 @@ extension AssociatedObjects {
 
     /// wrapper around `objc_setAssociatedObject`
     func ao_setOptional(_ value: Any?, pkey: UnsafeRawPointer, policy: AssociationPolicy = .retainNonatomic) {
-        guard let value = value else { return }
         objc_setAssociatedObject(self, pkey, value, policy.objc)
     }
 

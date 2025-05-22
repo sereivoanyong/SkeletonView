@@ -34,9 +34,9 @@ public extension UIView {
     }
 
     @IBInspectable
-    var skeletonCornerRadius: Float {
-        get { _skeletonableCornerRadius }
-        set { _skeletonableCornerRadius = newValue }
+    var skeletonCornerRadius: CGFloat {
+        get { return _skeletonableCornerStyle.resolved(for: nil) }
+        set { _skeletonableCornerStyle = newValue < 0 ? .capsule : .fixed(newValue) }
     }
     
 }

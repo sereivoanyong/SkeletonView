@@ -18,7 +18,7 @@ extension UILabel {
     var desiredHeightBasedOnNumberOfLines: CGFloat {
         let spaceNeededForEachLine = estimatedLineHeight * CGFloat(estimatedNumberOfLines)
         let spaceNeededForSpaces = skeletonLineSpacing * CGFloat(estimatedNumberOfLines - 1)
-        let padding = paddingInsets.top + paddingInsets.bottom
+        let padding = insets.top + insets.bottom
         
         return spaceNeededForEachLine + spaceNeededForSpaces + padding
     }
