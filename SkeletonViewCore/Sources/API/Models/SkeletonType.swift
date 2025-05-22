@@ -13,6 +13,68 @@
 
 import UIKit
 
+#if DEBUG
+
+final private class Layer: CALayer {
+    
+    private static var referenceCount: Int = 0
+    
+    override init(layer: Any) {
+        super.init(layer: layer)
+        Self.referenceCount += 1
+        skeletonLog("Layer created: \(Self.referenceCount) in total")
+    }
+    
+    override init() {
+        super.init()
+        Self.referenceCount += 1
+        skeletonLog("Layer created. \(Self.referenceCount) in total")
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        Self.referenceCount += 1
+        skeletonLog("Layer created. \(Self.referenceCount) in total")
+    }
+    
+    deinit {
+        Self.referenceCount -= 1
+        skeletonLog("Layer destroyed. \(Self.referenceCount) left")
+    }
+}
+
+final private class GradientLayer: CAGradientLayer {
+    
+    private static var referenceCount: Int = 0
+    
+    override init(layer: Any) {
+        super.init(layer: layer)
+        Self.referenceCount += 1
+        skeletonLog("Layer created: \(Self.referenceCount) in total")
+    }
+    
+    override init() {
+        super.init()
+        Self.referenceCount += 1
+        skeletonLog("Layer created. \(Self.referenceCount) in total")
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        Self.referenceCount += 1
+        skeletonLog("Layer created. \(Self.referenceCount) in total")
+    }
+    
+    deinit {
+        Self.referenceCount -= 1
+        skeletonLog("Layer destroyed. \(Self.referenceCount) left")
+    }
+}
+#else
+private typealias Layer = CALayer
+private typealias GradientLayer = CAGradientLayer
+#endif
+
 public enum SkeletonType {
     
     case solid
@@ -21,9 +83,9 @@ public enum SkeletonType {
     var layer: CALayer {
         switch self {
         case .solid:
-            return CALayer()
+            return Layer()
         case .gradient:
-            return CAGradientLayer()
+            return GradientLayer()
         }
     }
     
